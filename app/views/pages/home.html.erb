@@ -1,2 +1,45 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+
+
+<div class="hero-section">
+  <h1>Find the perfect surfboard in Bali</h1>
+  <p>Trusted by 10,000+ surfers</p>
+  <%= link_to "Let's Go", surfboards_path, class: "lets-go-btn" %>
+</div>
+
+<div class="card-grid">
+  <% @surfboards.each do |surfboard| %>
+    <div class="card">
+      <h5><%= surfboard.category %></h5>
+      <p><%= surfboard.location %></p>
+    </div>
+  <% end %>
+</div>
+
+
+  <div class="info-section">
+  <h1>How it works ?</h1>
+
+  <div class="how-it-works">
+    <div class="how-step">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <h5>Search</h5>
+      <p>Enter your preferences to find the best board</p>
+    </div>
+
+    <div class="how-step">
+      <i class="fa-solid fa-check"></i>
+      <h5>Compare</h5>
+      <p>Review different boards and their features</p>
+    </div>
+
+    <div class="how-step">
+      <i class="fa-solid fa-bolt"></i>
+      <h5>Book Easily</h5>
+      <p>Reserve your board quickly and securely</p>
+    </div>
+  </div>
+
+  <h3>Ready to start?</h3>
+  <p>Create your account</p>
+  <%= link_to 'Sign Up', new_user_registration_path, class: "signup-btn" %>
+</div>
