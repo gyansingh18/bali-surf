@@ -1,0 +1,2 @@
+class SurfboardsController < ApplicationController
+end
