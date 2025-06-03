@@ -1,6 +1,6 @@
 class SurfboardsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
-  
+
   def index
     @surfboards = Surfboard.all
   end
@@ -14,7 +14,7 @@ class SurfboardsController < ApplicationController
     @surfboard.user = current_user
     if @surfboard.save
       # Change path later on
-      redirect_to root_path
+      redirect_to surfboards_path
     else
       render :new, status: :unprocessable_entity
     end
