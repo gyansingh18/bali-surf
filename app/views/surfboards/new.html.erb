@@ -1,0 +1,8 @@
+<%= simple_form_for @surfboard do |f| %>
+  <%= f.input :category, collection: Surfboard::CATEGORIES, prompt: "Select a category" %>
+  <%= f.input :size %>
+  <%= f.input :tail, collection: Surfboard::TAIL_TYPES, prompt: "Select a tail type" %>
+  <%= f.input :location %>
+  <%= f.input :price %>
+  <%= f.submit %>
+<% end %>
