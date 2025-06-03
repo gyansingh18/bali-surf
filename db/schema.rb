@@ -29,7 +29,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_03_091854) do
 
   create_table "surfboards", force: :cascade do |t|
     t.string "category"
-    t.float "size", default: 0.0
+    t.float "size"
     t.boolean "available", default: true
     t.string "tail"
     t.bigint "user_id", null: false

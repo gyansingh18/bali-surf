@@ -1,5 +1,5 @@
 <div class="container d-flex">
-  <div class="left-body p-4">
+  <div class="left-body p-4" style="margin-right: 150px">
     <h1 class="pb-4">Book your board</h1>
     <div>
         <%= simple_form_for [@surfboard, @booking]   do |f| %>
@@ -18,17 +18,17 @@
       <hr>
       <div class="my-3 d-flex justify-content-between">
         <div>
-          <h2>Total price:</h2>
+          <h2>Price per day:</h2>
         </div>
         <div>
-          <h2>$<%= @booking.total_price %></h2>
+          <h2>$<%= @surfboard.price %></h2>
         </div>
       </div>
       <hr>
       <div class="my-3">
         <h3>Surfboard details:</h3>
         <p>Location: <b><%= @surfboard.location %></b></p>
-        <p>Category:<b><%= @surfboard.category %></b></p>
+        <p>Category: <b><%= @surfboard.category %></b></p>
         <p>Size: <b><%= @surfboard.size %></b></p>
         <p>Tail: <b><%= @surfboard.tail %></b></p>
       </div>
