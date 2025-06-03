@@ -1,37 +1,69 @@
-<div class="container d-flex">
-  <div class="left-body p-4" style="margin-right: 150px">
-    <h1 class="pb-4">Book your board</h1>
-    <div>
-        <%= simple_form_for [@surfboard, @booking]   do |f| %>
-          <%= f.input :start_date%>
-          <%= f.input :end_date %>
-          <%= f.submit class: "btn btn-secondary" %>
-        <% end %>
+<%# app/views/surfboards/new.html.erb %>
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col-12 text-center mb-4">
+      <h1 class="new-surfboard-title">Add a surfboard to be rented!</h1>
     </div>
   </div>
 
-  <div class="right-body p-4">
-    <div class="card-basics card-format">
-      <div class="my-4">
-        <img src=<%= @surfboard.image_url %> alt="surfboard" class="card-image">
-      </div>
-      <hr>
-      <div class="my-3 d-flex justify-content-between">
-        <div>
-          <h2>Price per day:</h2>
+  <div class="row new-surfboard-form-container">
+    <div class="col-md-6 p-4">
+      <%= simple_form_for @surfboard do |f| %>
+        <%= f.input :category, collection: Surfboard::CATEGORIES, prompt: "Select a category", input_html: { class: 'rounded-input' } %>
+        <%= f.input :size, input_html: { class: 'rounded-input' } %>
+        <%= f.input :tail, collection: Surfboard::TAIL_TYPES, prompt: "Select a tail type", input_html: { class: 'rounded-input' } %>
+        <%= f.input :location, input_html: { class: 'rounded-input' } %>
+        <%= f.input :price, input_html: { class: 'rounded-input' } %>
+        <%= f.input :description, as: :text, input_html: { class: 'rounded-input', rows: 5 } %>
+        <%= f.input :condition, collection: Surfboard::CONDITIONS, prompt: "Select condition", input_html: { class: 'rounded-input' } %>
+
+        <div class="col-md-6 p-4 d-flex flex-column align-items-center justify-content-center">
+          <div class="image-upload-wrapper">
+            <div class="image-placeholder d-flex align-items-center justify-content-center mb-3" id="imagePreview">
+              <i class="fa-solid fa-camera fa-3x text-muted"></i>
+              <img src="#" alt="Surfboard Image Preview" class="img-fluid d-none" id="previewImage">
+            </div>
+
+            <%= f.input :image, as: :file, label: false, input_html: { class: 'd-none', id: 'surfboard_image_input', onchange: 'previewFile()' } %>
+            <label for="surfboard_image_input" class="btn btn-secondary mt-3">Add Image</label>
+            <small class="text-muted mt-2">Max file size: 5MB. Formats: JPG, PNG, GIF.</small>
+          </div>
         </div>
-        <div>
-          <h2>$<%= @surfboard.price %></h2>
-        </div>
-      </div>
-      <hr>
-      <div class="my-3">
-        <h3>Surfboard details:</h3>
-        <p>Location: <b><%= @surfboard.location %></b></p>
-        <p>Category: <b><%= @surfboard.category %></b></p>
-        <p>Size: <b><%= @surfboard.size %></b></p>
-        <p>Tail: <b><%= @surfboard.tail %></b></p>
-      </div>
+
+        <%= f.submit "Add Surfboard", class: "btn btn-primary mt-3 w-100" %>
+      <% end %>
     </div>
   </div>
 </div>
+
+<%# JavaScript for image preview (add to a JS file like app/javascript/packs/application.js or custom.js) %>
+<script>
+  function previewFile() {
+    const preview = document.getElementById('previewImage');
+    const cameraIcon = document.querySelector('#imagePreview .fa-camera');
+    const fileInput = document.getElementById('surfboard_image_input');
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = function () {
+      preview.src = reader.result;
+      preview.classList.remove('d-none');
+      if (cameraIcon) {
+        cameraIcon.classList.add('d-none');
+      }
+      // Set min-height to match the placeholder for better visual
+      preview.style.minHeight = document.getElementById('imagePreview').offsetHeight + 'px';
+    }
+
+    if (file) {
+      reader.readAsDataURL(file); // Reads the file as a URL
+    } else {
+      preview.src = "";
+      preview.classList.add('d-none');
+      if (cameraIcon) {
+        cameraIcon.classList.remove('d-none');
+      }
+    }
+  }
+</script>
