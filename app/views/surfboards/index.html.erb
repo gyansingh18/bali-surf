@@ -1,7 +1,7 @@
 <div class="container">
   <h2 class="text-center">Find your perfect board!</h2>
   <br>
-  <form class="row row-cols-lg-auto g-3 align-items-center">
+  <form class="row row-cols-lg-auto g-3 justify-content-center">
     <div class="col-12">
       <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
       <div class="input-group">
@@ -20,61 +20,43 @@
       </select>
     </div>
 
-    <div class="col-12">
+    <%# <div class="col-12">
       <div class="form-check">
         <input class="form-check-input" type="checkbox" id="inlineFormCheck">
         <label class="form-check-label" for="inlineFormCheck">
           Remember me
         </label>
       </div>
-    </div>
+    </div> %>
 
     <div class="col-12">
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </form>
   <br>
-   <div style="width: 100%; height: 600px;"
-    data-controller="map"
-    data-map-markers-value="<%= @markers.to_json %>"
-    data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-  </div>
-  
+
+
   <br>
-  <div class="cardslist">
-  <% @surfboards.each do |surfboard| %>
-    <div class="cardlist my-3">
-        <img class="board-img" src= <%= surfboard.image_url%> />
-        <div class="card-product-infos">
-          <h2><%= surfboard.category%></h2>
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="categories">
-              <div class="category p-3">
-                <div class="d-inline">
-                  <p><%= image_tag "surfboard_icon", width: "12px" %> board type</p>
-                </div>
-                <p><strong><%= surfboard.category %></strong></p>
-              </div>
-              <div class="category p-3">
-                <div class="d-inline">
-                  <p><%= image_tag "location_icon", width: "12px" %> location</p>
-                </div>
-                <p><strong><%= surfboard.location %></strong></p>
-              </div>
-              <div class="category p-3">
-                <div class="d-inline">
-                  <p><%= image_tag "owner_icon", width: "12px" %> Owner</p>
-                </div>
-                <p><strong><%= surfboard.user.email%></strong></p>
-              </div>
-            </div>
-            <%= link_to "Book now", new_surfboard_booking_path(surfboard), class: "btn btn-secondary"%>
+</div>
+
+  <div class="d-flex">
+    <div class="cardslist">
+      <% @surfboards.each do |surfboard| %>
+        <div class="card" style="width: 18rem;">
+          <img src=<%= surfboard.image_url%> class="card-img-top">
+          <div class="card-body">
+          <div class="d-inline justify-content-between">
+            <p class="card-title mb-0"><strong><%= surfboard.category %></strong> in <%= surfboard.location %></p>
+            <p><strong><%= surfboard.price %></strong> /day</p>
           </div>
-      </div>
+              <%= link_to "Check it now!", new_surfboard_booking_path(surfboard), class: "btn btn-secondary"%>
+          </div>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
-
+    <div style="width: 100%; height: 600px; position: sticky; top: 0; height: 100vh;"
+      data-controller="map"
+      data-map-markers-value="<%= @markers.to_json %>"
+      data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
     </div>
   </div>
-</div>

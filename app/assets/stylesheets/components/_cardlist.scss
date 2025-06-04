@@ -37,3 +37,11 @@
   justify-content: space-around;
   flex-grow: 1;
 }
+
+.cardslist {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px 10px;
+  padding-inline: 20px;
+  font-size: 12px;
+}
