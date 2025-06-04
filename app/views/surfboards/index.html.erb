@@ -62,7 +62,7 @@
                 <p><strong><%= surfboard.user.email%></strong></p>
               </div>
             </div>
-            <%= link_to "Book now", new_surfboard_booking_path(@surfboards.first), class: "btn btn-secondary"%>
+            <%= link_to "Book now", new_surfboard_booking_path(surfboard), class: "btn btn-secondary"%>
           </div>
       </div>
     </div>
