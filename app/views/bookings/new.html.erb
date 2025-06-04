@@ -1,36 +1,36 @@
-<div class="container d-flex">
-  <div class="left-body p-4" style="margin-right: 150px">
-    <h1 class="pb-4">Book your board</h1>
+<div class="container d-flex pt-5" data-controller="price-update" data-price-update-rate-value= <%= @surfboard.price %>>
+  <div class="left-body p-4" style="margin-right: 50px">
+    <h1 class="pb-4">Book now!</h1>
     <div>
         <%= simple_form_for [@surfboard, @booking]   do |f| %>
-          <%= f.input :start_date%>
-          <%= f.input :end_date %>
+          <%= f.input :start_date,
+            as: :string,
+            input_html: { data: { controller: "datepicker", price_update_target: "startDate", action: "input->price-update#update" } } %>
+          <%= f.input :end_date,
+            as: :string,
+            input_html: { data: { controller: "datepicker", price_update_target: "endDate", action: "input->price-update#update" } } %>
           <%= f.submit class: "btn btn-secondary" %>
         <% end %>
     </div>
   </div>
 
-  <div class="right-body p-4">
-    <div class="booking-card-basics">
-      <div class="my-4">
+  <div class="right-body">
+    <div class="booking-card-overall d-flex">
+      <div class="booking-card-image-div">
         <img src=<%= @surfboard.image_url %> alt="surfboard" class="booking-card-image">
       </div>
-      <hr>
-      <div class="my-3 d-flex justify-content-between">
+      <div class="booking-card-body">
+        <h3 data-price-update-target="totalPrice">Select dates</h3>
+        <hr>
         <div>
-          <h2>Price per day:</h2>
+          <p><h4>Surfboard details</h4></p>
+          <div class="">
+              <p>Location: <b><%= @surfboard.location %></b></p>
+              <p>Category: <b><%= @surfboard.category %></b></p>
+              <p>Size: <b><%= @surfboard.size %></b></p>
+              <p>Tail: <b><%= @surfboard.tail %></b></p>
+          </div>
         </div>
-        <div>
-          <h2>$<%= @surfboard.price %></h2>
-        </div>
-      </div>
-      <hr>
-      <div class="my-3">
-        <h3>Surfboard details:</h3>
-        <p>Location: <b><%= @surfboard.location %></b></p>
-        <p>Category: <b><%= @surfboard.category %></b></p>
-        <p>Size: <b><%= @surfboard.size %></b></p>
-        <p>Tail: <b><%= @surfboard.tail %></b></p>
       </div>
     </div>
   </div>
