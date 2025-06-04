@@ -39,7 +39,7 @@
     data-map-markers-value="<%= @markers.to_json %>"
     data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
   </div>
-  
+
   <br>
   <div class="cardslist">
   <% @surfboards.each do |surfboard| %>
@@ -51,19 +51,19 @@
             <div class="categories">
               <div class="category p-3">
                 <div class="d-inline">
-                  <p><%= image_tag "surfboard_icon", width: "12px" %> board type</p>
+                  <p><%= image_tag "surfboard_icon.png", width: "12px" %> board type</p>
                 </div>
                 <p><strong><%= surfboard.category %></strong></p>
               </div>
               <div class="category p-3">
                 <div class="d-inline">
-                  <p><%= image_tag "location_icon", width: "12px" %> location</p>
+                  <p><%= image_tag "location_icon.png", width: "12px" %> location</p>
                 </div>
                 <p><strong><%= surfboard.location %></strong></p>
               </div>
               <div class="category p-3">
                 <div class="d-inline">
-                  <p><%= image_tag "owner_icon", width: "12px" %> Owner</p>
+                  <p><%= image_tag "owner_icon.png", width: "12px" %> Owner</p>
                 </div>
                 <p><strong><%= surfboard.user.email%></strong></p>
               </div>
