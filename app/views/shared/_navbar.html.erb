@@ -12,13 +12,13 @@
       <ul class="navbar-nav me-auto">
         <% if user_signed_in? %>
           <li class="nav-item active">
-            <%= link_to "Home", "#", class: "nav-link" %>
+            <%= link_to "Home", root_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Add a board", "#", class: "nav-link" %>
+            <%= link_to "Add a board", new_surfboard_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to "My bookings", "#", class: "nav-link" %>
+            <%= link_to "My bookings", bookings_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
               <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "nav-link" %>
