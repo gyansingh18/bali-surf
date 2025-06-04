@@ -6,6 +6,10 @@ class Surfboard < ApplicationRecord
 
   has_one_attached :image     # For image uploads using Active Storage
 
+  # geocoder stuff
+  geocoded_by :location
+  after_validation :geocode, if: :will_save_change_to_location?
+
   # Constants for dropdowns/inclusions
   CATEGORIES = ["Longboard", "Shortboard", "Softboard"].freeze
   TAIL_TYPES = ["Square Tail", "Squash Tail", "Round Tail", "Pin Tail", "Swallow Tail"].freeze
