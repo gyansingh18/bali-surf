@@ -57,7 +57,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_04_041444) do
 
   create_table "surfboards", force: :cascade do |t|
     t.string "category"
-    t.float "size"
+    t.float "size", default: 0.0
     t.boolean "available", default: true
     t.string "tail"
     t.bigint "user_id", null: false
@@ -66,6 +66,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_04_041444) do
     t.string "location"
     t.string "image_url"
     t.float "price"
+    t.text "description"
+    t.string "condition"
     t.float "latitude"
     t.float "longitude"
     t.index ["user_id"], name: "index_surfboards_on_user_id"
