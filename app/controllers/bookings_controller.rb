@@ -15,7 +15,7 @@ class BookingsController < ApplicationController
     @booking.surfboard = @surfboard
     @booking.total_price = ((@booking.end_date - @booking.start_date).to_i + 1) * @surfboard.price
     @booking.save
-    redirect_to surfboard_bookings_path
+    redirect_to bookings_path
   end
 
   private
