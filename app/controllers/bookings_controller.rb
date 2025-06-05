@@ -1,6 +1,14 @@
 class BookingsController < ApplicationController
   def index
-    @bookings = Booking.all
+    # @bookings = Booking.all
+    @bookings_as_owner = current_user.surfboards.map do |surfboard|
+      surfboard.bookings
+    end
+
+    @bookings_as_owner = @bookings_as_owner.flatten
+
+    @bookings_as_renter = current_user.bookings
+    # raise/
   end
 
   def new
@@ -17,6 +25,19 @@ class BookingsController < ApplicationController
     @booking.save
     redirect_to bookings_path
   end
+
+  def accept
+    @booking = Booking.find(params[:id])
+    @booking.update(status: "accepted")
+    redirect_to bookings_path, notice: "Booking accepted."
+  end
+
+  def deny
+    @booking = Booking.find(params[:id])
+    @booking = Booking.update(status: "denied")
+    redirect_to bookings_path, alert: "Booking denied."
+  end
+
 
   private
   def booking_params

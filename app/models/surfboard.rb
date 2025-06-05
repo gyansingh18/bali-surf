@@ -3,6 +3,7 @@ class Surfboard < ApplicationRecord
   # Associations
   belongs_to :user             # A surfboard belongs to a user (owner)
   has_many :bookings           # A surfboard can have many bookings
+  has_many :reviews, through: :bookings
 
   has_one_attached :photo     # For image uploads using Active Storage
 

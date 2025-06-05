@@ -12,13 +12,13 @@
       <div class="col-3">
         <div>
           <%= image_tag("surfboard_icon.png", width: "20px") %><%= label :surfboard, :category, '   Board Type' %>
-          <%= select(:surfboard, :category, Surfboard::CATEGORIES, { include_blank: "All types", selected: params[:surfboard][:category] }, class: "form-control")%>
+          <%= select(:surfboard, :category, Surfboard::CATEGORIES, { include_blank: "All types", selected: params&.dig(:surfboard,:category)}, class: "form-control")%>
         </div>
       </div>
       <div class="col-3">
         <div>
           <%= image_tag("tail1_icon.png", width: "20px") %><%= label :surfboard, :tail, '   Tail Type' %>
-          <%= select(:surfboard, :tail, Surfboard::TAIL_TYPES, { include_blank: "All types", selected: params[:surfboard][:tail] }, class: "form-control") %>
+          <%= select(:surfboard, :tail, Surfboard::TAIL_TYPES, { include_blank: "All types", selected: params&.dig(:surfboard, :tail) }, class: "form-control") %>
         </div>
       </div>
         <div>

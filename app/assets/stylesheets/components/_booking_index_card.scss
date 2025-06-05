@@ -1,0 +1,60 @@
+.bookings-title {
+  font-family:$headers-font;
+  font-size: $headers-font;
+  color: $primary-colour;
+  margin-bottom: 1rem;
+}
+
+.bookings-table {
+  width: 100%;
+  border-collapse:100%;
+  font-family:$body-font-colour;
+  color: $body-font-colour;
+  background-color: $background-colour;
+  border: 1px solid $gray-shade-colour;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.05)
+}
+
+.book-heading {
+  background-color:$primary-colour;
+  color: white;
+  font-weight: 600;
+  font-family: $headers-font;
+
+  th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 2px solid $gray-shade-colour;
+  }
+}
+
+booking-outcome {
+  .book-row {
+    &:nth-child(even) {
+      background-color: lighten($gray-shade-colour, 20%);
+    }
+  }
+}
+
+td {
+  padding: 0.75rem 1rem;
+  border-bottom:1px solid $gray-shade-colour;
+  font-size: 0.95rem;
+}
+
+.header-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.booking-status {
+  font-size: 0.95rem;
+  color: darken($gray-shade-colour, 20%);
+  margin: 0;
+  font-weight: 500;
+}
+
+.accept-deny-button {
+  width: 100px;
+}
