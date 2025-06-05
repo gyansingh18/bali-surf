@@ -1,101 +1,111 @@
 <div class="container">
-  <h1 class="bookings-title"> Bookings as owner <h1>
-
-  <div class="">
-    <% @bookings_as_owner.each do |booking| %>
-      <div class="cardlist my-3">
-        <img class="board-img" src= <%= booking.surfboard.image_url %> />
-        <div class="card-product-infos">
-          <%# add user name tommorow %>
-          <div class="header-price">
-            <h2><%=  booking.user.email %></h2>
-            <p>
-              Total Price
-              <strong><%= '%.2f' % booking.total_price%>k IDR</strong>
-            </p>
-            <p class="booking-status">
-              Status: <%= booking.status.capitalize %>
-            </p>
-
-          </div>
-
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="categories">
-              <div class="category p-3">
-                <div class="d-inline">
-                  <p><%= image_tag "surfboard_icon", width: "12px" %> board type</p>
-                </div>
-                <p><strong><%= booking.surfboard.category %></strong></p>
-              </div>
-              <div class="category p-3">
-                <div class="d-inline">
-                  <p><%= image_tag "calender_icon", width: "12px" %> Check-in</p>
-                </div>
-                <p><strong><%= booking.start_date.strftime("%b %d, %Y")%></strong></p>
-              </div>
-              <div class="category p-3">
-                <div class="d-inline">
-                  <p><%= image_tag "calender_icon", width: "12px" %>Check-out</p>
-                </div>
-                <p><strong><%= booking.end_date.strftime("%b %d, %Y")%></strong></p>
-              </div>
-            </div>
-          <% if booking.status == "pending" %>
-            <%= button_to "Accept", accept_booking_path(booking), method: :patch, class: "btn accept-deny-button btn-sm btn-success me-2"%>
-            <%= button_to "Deny", deny_booking_path(booking), method: :patch, class: "btn accept-deny-button btn-sm btn-danger"%>
+  <% if @bookings_as_owner.any?%>
+    <h1 class="bookings-title"> Bookings as owner <h1>
+    <div>
+      <% @bookings_as_owner.each do |booking| %>
+        <div class="cardlist my-3">
+          <% if booking.surfboard.photo.attached? %>
+            <%= cl_image_tag booking.surfboard.photo.key, class: "board-img" %>
+          <% else  %>
+            <%= image_tag "surfboard_placeholder.png", class: "board-img" %>
           <% end %>
+          <div class="card-product-infos">
+            <%# add user name tommorow %>
+            <div class="header-price">
+              <h2><%=  booking.user.email %></h2>
+              <p>
+                Total Price
+                <strong><%= '%.2f' % booking.total_price%>k IDR</strong>
+              </p>
+              <p class="booking-status">
+                Status: <%= booking.status.capitalize %>
+              </p>
+
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="categories">
+                <div class="category p-3">
+                  <div class="d-inline">
+                    <p><%= image_tag "surfboard_icon", width: "12px" %> board type</p>
+                  </div>
+                  <p><strong><%= booking.surfboard.category %></strong></p>
+                </div>
+                <div class="category p-3">
+                  <div class="d-inline">
+                    <p><%= image_tag "calender_icon", width: "12px" %> Check-in</p>
+                  </div>
+                  <p><strong><%= booking.start_date.strftime("%b %d, %Y")%></strong></p>
+                </div>
+                <div class="category p-3">
+                  <div class="d-inline">
+                    <p><%= image_tag "calender_icon", width: "12px" %>Check-out</p>
+                  </div>
+                  <p><strong><%= booking.end_date.strftime("%b %d, %Y")%></strong></p>
+                </div>
+              </div>
+            <% if booking.status == "pending" %>
+              <%= button_to "Accept", accept_booking_path(booking), method: :patch, class: "btn accept-deny-button btn-sm btn-success me-2"%>
+              <%= button_to "Deny", deny_booking_path(booking), method: :patch, class: "btn accept-deny-button btn-sm btn-danger"%>
+            <% end %>
+            </div>
           </div>
         </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <%end %>
 
-  <hr>
+  <% if @bookings_as_renter.any? %>
+    <h1 class="bookings-title"> Bookings as renter <h1>
 
-  <h1 class="bookings-title"> Bookings as renter <h1>
+    <div>
+      <% @bookings_as_renter.each do |booking| %>
+        <div class="cardlist my-3">
+          <% if booking.surfboard.photo.attached? %>
+            <%= cl_image_tag booking.surfboard.photo.key, class: "board-img" %>
+          <% else  %>
+            <%= image_tag "surfboard_placeholder.png", class: "board-img" %>
+          <% end %>
+          <div class="card-product-infos">
+            <%# add user name tommorow %>
+            <div class="header-price">
+              <h2> Owner: <%=  booking.surfboard.user.email %></h2>
+              <p>
+                Total Price
+                <strong><%= '%.2f' % booking.total_price%>k IDR</strong>
+              </p>
+              <p class="booking-status">
+                Status: <%= booking.status.capitalize %>
+              </p>
 
-  <div class="">
-    <% @bookings_as_renter.each do |booking| %>
-      <div class="cardlist my-3">
-        <img class="board-img" src= <%= booking.surfboard.image_url %> />
-        <div class="card-product-infos">
-          <%# add user name tommorow %>
-          <div class="header-price">
-            <h2><%=  booking.user.email %></h2>
-            <p>
-              Total Price
-              <strong><%= '%.2f' % booking.total_price%>k IDR</strong>
-            </p>
-            <p class="booking-status">
-              Status: <%= booking.status.capitalize %>
-            </p>
+            </div>
 
-          </div>
-
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="categories">
-              <div class="category p-3">
-                <div class="d-inline">
-                  <p><%= image_tag "surfboard_icon", width: "12px" %> board type</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="categories">
+                <div class="category p-3">
+                  <div class="d-inline">
+                    <p><%= image_tag "surfboard_icon", width: "12px" %> board type</p>
+                  </div>
+                  <p><strong><%= booking.surfboard.category %></strong></p>
                 </div>
-                <p><strong><%= booking.surfboard.category %></strong></p>
-              </div>
-              <div class="category p-3">
-                <div class="d-inline">
-                  <p><%= image_tag "calender_icon", width: "12px" %> Check-in</p>
+                <div class="category p-3">
+                  <div class="d-inline">
+                    <p><%= image_tag "calender_icon", width: "12px" %> Check-in</p>
+                  </div>
+                  <p><strong><%= booking.start_date.strftime("%b %d, %Y")%></strong></p>
                 </div>
-                <p><strong><%= booking.start_date.strftime("%b %d, %Y")%></strong></p>
-              </div>
-              <div class="category p-3">
-                <div class="d-inline">
-                  <p><%= image_tag "calender_icon", width: "12px" %>Check-out</p>
+                <div class="category p-3">
+                  <div class="d-inline">
+                    <p><%= image_tag "calender_icon", width: "12px" %>Check-out</p>
+                  </div>
+                  <p><strong><%= booking.end_date.strftime("%b %d, %Y")%></strong></p>
                 </div>
-                <p><strong><%= booking.end_date.strftime("%b %d, %Y")%></strong></p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    <% end %>
-  </div>
-  </div>
+      <% end %>
+    </div>
+
+  <%end%>
+</div>
