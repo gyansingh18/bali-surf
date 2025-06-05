@@ -7,8 +7,55 @@
   </div>
 </div>
 
+<section class="how-section">
+    <h1>How it works ?</h1>
+
+  <div class="how-steps">
+    <div class="how-step">
+      <span class="step-number">1</span>
+      <%= image_tag "compare_board.png", alt: "Search board", class: "how-img" %>
+      <h5>Search by location & type</h5>
+      <p>Browse available surfboards in your area based on location and board type.</p>
+    </div>
+
+    <div class="how-step">
+      <span class="step-number">2</span>
+      <%= image_tag "search_boards.png", alt: "Compare boards", class: "how-img" %>
+      <h5>Compare boards & prices</h5>
+      <p>View ratings, features, and pricing to find your ideal surfboard match.</p>
+    </div>
+
+    <div class="how-step">
+      <span class="step-number">3</span>
+      <%= image_tag "book_easy.png", alt: "Book and pickup", class: "how-img" %>
+      <h5>Book & pick up easily</h5>
+      <p>Reserve your surfboard online and pick it up  with ease.</p>
+    </div>
+  </div>
+</section>
+
+<section class="testimonial-section">
+  <h1>What surfers are saying</h1>
+  <div class="testimonial-container">
+    <div class="testimonial-card">
+      <p class="quote">“Found my perfect board in minutes. Picked it up right on the beach!”</p>
+      <div class="author">– Alex, Australia</div>
+    </div>
+    <div class="testimonial-card">
+      <p class="quote">“Super smooth experience. I loved the comparison feature!”</p>
+      <div class="author">– Maya, UK</div>
+    </div>
+    <div class="testimonial-card">
+      <p class="quote">“I booked from my hostel and was surfing in less than 30 mins.”</p>
+      <div class="author">– Leo, Germany</div>
+    </div>
+  </div>
+</section>
+
+<h1 class= "sub-heading">Explore Available Surfboards in Bali</h1>
+
 <div class="card-grid">
-  <% @surfboards.each do |surfboard| %>
+  <% @surfboards.first(3).each do |surfboard| %>
     <div class="card">
       <h5><%= surfboard.category %></h5>
       <p><%= surfboard.location %></p>
@@ -18,7 +65,7 @@
 </div>
 
 <div class = "map-section">
-  <h3>Explore Boards on the Map</h3>
+  <h1 class ="sub-heading" >Explore Boards on the Map</h1>
      <div style="width: 100%; height: 600px;"
     data-controller="map"
     data-map-markers-value="<%= @markers.to_json %>"
@@ -27,30 +74,11 @@
 </div>
 
 
-  <div class="info-section">
-    <h1>How it works ?</h1>
 
-  <div class="how-it-works">
-    <div class="how-step">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <h5>Search</h5>
-      <p>Enter your preferences to find the best board</p>
-    </div>
 
-    <div class="how-step">
-      <i class="fa-solid fa-check"></i>
-      <h5>Compare</h5>
-      <p>Review different boards and their features</p>
-    </div>
 
-    <div class="how-step">
-      <i class="fa-solid fa-bolt"></i>
-      <h5>Book Easily</h5>
-      <p>Reserve your board quickly and securely</p>
-    </div>
-  </div>
 
+<div class ="footer">
   <h3>Ready to start?</h3>
-  <p>Create your account</p>
-  <%= link_to 'Sign Up', new_user_registration_path, class: "signup-btn" %>
+  <%= link_to 'Create your account', new_user_registration_path, class: "signup-btn" %>
 </div>
