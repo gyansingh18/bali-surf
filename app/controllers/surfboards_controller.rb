@@ -3,10 +3,11 @@ class SurfboardsController < ApplicationController
 
   def index
     @surfboards = Surfboard.all
-      if params[:location].present?
-        @surfboards = @surfboards.near(params[:location], 5)
-        # Surfboard.near("#{params[:location]}", 10)
-      end
+    if params[:location].present?
+      @surfboards = @surfboards.near(params[:location], 5)
+      # Surfboard.near("#{params[:location]}", 10)
+    end
+    if params[:surfboard].present?
       if params[:surfboard][:category].present?
         @surfboards = @surfboards.where("category ILIKE ?", "%#{params[:surfboard][:category]}%")
       end
@@ -17,7 +18,7 @@ class SurfboardsController < ApplicationController
         flash.now[:alert] = "Sorry, no boards match your research"
         @surfboards = Surfboard.all
       end
-
+    end
     @markers = @surfboards.geocoded.map do |surfboard|
       {
         lat: surfboard.latitude,
