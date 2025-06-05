@@ -1,33 +1,55 @@
-<h2>Sign up</h2>
-
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :first_name,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "John" }%>
-    <%= f.input :last_name,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "Smith" }%>
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" }%>
-    <%= f.input :password,
-                required: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: true,
-                input_html: { autocomplete: "new-password" } %>
+<div class="container my-5">
+  <div class="row">
+    <div class="col-12 text-center mb-4">
+      <h2 class="new-surfboard-title">Sign up</h2>
+      <%# You might want to rename 'new-surfboard-title' to something more general like 'form-title' %>
+    </div>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Sign up" %>
-  </div>
-<% end %>
+  <div class="row new-surfboard-form-container justify-content-center">
+    <div class="col-md-6 p-4">
+      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
 
-<%= render "devise/shared/links" %>
+        <%= f.input :first_name,
+          required: true, # Assuming you made it required in the model
+          input_html: { autocomplete: "given-name", class: 'rounded-input' }
+        %>
+
+        <%= f.input :last_name,
+          required: true, # Assuming you made it required in the model
+          input_html: { autocomplete: "family-name", class: 'rounded-input' }
+        %>
+
+
+        <%= f.input :password,
+          required: true,
+          hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+          input_html: { autocomplete: "new-password", class: 'rounded-input' }
+        %>
+
+        <%# Password Confirmation Field %>
+        <%= f.input :password_confirmation,
+          required: true,
+          input_html: { autocomplete: "new-password", class: 'rounded-input' }
+        %>
+
+        <div class="form-actions">
+          <%= f.button :submit, "Sign up", class: "btn btn-primary mt-3 w-100" %>
+        </div>
+      <% end %>
+
+      <div class="text-center mt-3">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+
+
+    <div class="col-md-6 p-4 d-flex flex-column align-items-center justify-content-center d-none">
+      <div class="image-placeholder d-flex align-items-center justify-content-center mb-3">
+        <i class="fa-solid fa-user fa-3x"></i>
+      </div>
+      <button class="btn btn-secondary mt-3" type="button">Add Profile Image</button>
+    </div>
+  </div>
+</div>
