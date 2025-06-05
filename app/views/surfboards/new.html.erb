@@ -17,19 +17,12 @@
         <%= f.submit "Add Surfboard", class: "btn btn-primary mt-3 w-100" %>
       <% end %>
     </div>
-    <div><%= cl_image_tag @surfboard.photo.key, height: 300, width: 400, crop: :fill %>
-    </div>
 
     <div class="col-md-6 p-4 d-flex flex-column align-items-center justify-content-center d-none">
       <div class="image-placeholder d-flex align-items-center justify-content-center mb-3">
         <i class="fa-solid fa-camera fa-3x text-muted"></i>
-        <%# If you had an image field in your form, you'd put it here %>
-        <%# for example: f.input :image, as: :file, input_html: { class: 'd-none', id: 'surfboard_image_input' } %>
-        <%# and then style a label to look like a button %>
       </div>
-      <button class="btn btn-secondary mt-3">Add Image</button>
-      <%# If you were actually uploading a file, this would be a label for an input type="file" %>
-      <%# <label for="surfboard_image_input" class="btn btn-secondary mt-3">Add Image</label> %>
+      <button class="btn btn-secondary mt-3" type="file">Add Image</button>
     </div>
   </div>
 </div>

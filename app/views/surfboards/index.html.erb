@@ -44,7 +44,11 @@
   <div class="cardslist">
   <% @surfboards.each do |surfboard| %>
     <div class="cardlist my-3">
-        <img class="board-img" src= <%= surfboard.image_url%> />
+        <% if surfboard.photo.attached? %>
+          <%= cl_image_tag surfboard.photo.key, class: "board-img" %>
+        <% else  %>
+          <%= image_tag "surfboard_placeholder.png", class: "board-img" %>
+        <% end %>
         <div class="card-product-infos">
           <h2><%= surfboard.category%></h2>
           <div class="d-flex justify-content-between align-items-center">
