@@ -18,9 +18,6 @@ gyan = User.create!(email: "gyan@gmail.com", password: "password@123")
 jannis = User.create!(email: "jannis@gmail.com", password: "password@123")
 puts "Users created!"
 
-ashley = User.create(email: "ashley@gmail.com", password: "password@123")
-alizee = User.create(email: "alizee@gmail.com", password: "password@123")
-jannis = User.create(email: "jb", password: "jb")
 puts "Creating surfboards and attaching photos..."
 
 # Surfboard 1
@@ -51,8 +48,6 @@ board_two.photo.attach(io: file_two, filename: "board_two.jpg", content_type: "i
 board_two.save!
 puts "Created board_two with photo."
 
-booking_one = Booking.create(
-=======
 # Surfboard 3
 board_three = Surfboard.new(
   price: 399.99,
@@ -108,12 +103,6 @@ booking_three = Booking.create(
   total_price: 299.99,
   user: alizee,
   surfboard: board_two
-)
-
-Review.create(
-  rating: 7,
-  comment: "It's not about winning, it's about having fun.",
-  booking: booking_one
 )
 
 Review.create(
