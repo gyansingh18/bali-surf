@@ -1,6 +1,7 @@
 class Booking < ApplicationRecord
   belongs_to :user
   belongs_to :surfboard
+  has_one :review, dependent: :destroy
 
   # consider adding validation for start_date and end_date should be in the future
   validates :start_date, presence: true
