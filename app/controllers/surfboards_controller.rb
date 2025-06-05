@@ -3,6 +3,27 @@ class SurfboardsController < ApplicationController
 
   def index
     @surfboards = Surfboard.all
+      if params[:location].present?
+        @surfboards = @surfboards.near(params[:location], 5)
+        # Surfboard.near("#{params[:location]}", 10)
+      end
+      if params[:surfboard][:category].present?
+        @surfboards = @surfboards.where("category ILIKE ?", "%#{params[:surfboard][:category]}%")
+      end
+      if params[:surfboard][:tail].present?
+        @surfboards = @surfboards.where("tail ILIKE ?", "%#{params[:surfboard][:tail]}%")
+      end
+      if @surfboards.empty?
+        flash.now[:alert] = "Sorry, no boards match your research"
+        @surfboards = Surfboard.all
+      end
+
+    @markers = @surfboards.geocoded.map do |surfboard|
+      {
+        lat: surfboard.latitude,
+        lng: surfboard.longitude
+      }
+    end
   end
 
   def new
@@ -23,6 +44,6 @@ class SurfboardsController < ApplicationController
   private
 
   def surfboard_params
-    params.require(:surfboard).permit(:category, :size, :price, :tail, :location, :image_url)
+    params.require(:surfboard).permit(:category, :size, :price, :tail, :location, :image_url, :photo)
   end
 end
