@@ -21,7 +21,8 @@ class SurfboardsController < ApplicationController
     @markers = @surfboards.geocoded.map do |surfboard|
       {
         lat: surfboard.latitude,
-        lng: surfboard.longitude
+        lng: surfboard.longitude,
+        info_window_html: render_to_string(partial: "info_window", locals: {surfboard: surfboard})
       }
     end
   end
