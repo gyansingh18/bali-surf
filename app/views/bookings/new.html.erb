@@ -1,45 +1,82 @@
-<div class="container d-flex pt-5" data-controller="price-update" data-price-update-rate-value= <%= @surfboard.price %>>
-  <div class="left-body" style="margin-right: 100px">
-    <div class="booking-card-overall d-flex">
-      <div class="booking-card-image-div">
-        <img src=<%= @surfboard.image_url %> alt="surfboard" class="booking-card-image">
-      </div>
-      <div class="booking-card-body">
-          <h4>Surfboard details</h4>
-          <hr>
-          <div class="surfboard-info">
-            <p><%= image_tag "location_icon.png", alt: "Icon", width: 15 %>
-            Location: <b><%= @surfboard.location %></b></p>
-            <p><%= image_tag "surfboard_icon.png", alt: "Icon", width: 15 %>
-            Category: <b><%= @surfboard.category %></b></p>
-            <p><%= image_tag "tail_icon.png", alt: "Icon", width: 15 %>
-            Size: <b><%= @surfboard.size %></b></p>
-            <p><%= image_tag "size_icon.png", alt: "Icon", width: 15 %>
-            Tail: <b><%= @surfboard.tail %></b></p>
-            <p><%= image_tag "owner_icon.png", alt: "Icon", width: 15 %>
-            Owner: <b><%= @surfboard.user.email %></b></p>
-            <p><%= image_tag "price_icon.png", alt: "Icon", width: 15 %>
-            Daily rate: <b>$<%= @surfboard.price %></b></p>
-            <p><%= image_tag "star_icon.png", alt: "Icon", width: 15 %>
-            Review: <b>Every board is perfect</b></p>
+<div class="container pt-5" data-controller="price-update" data-price-update-rate-value= <%= @surfboard.price %>>
+
+  <div class="top-body d-flex">
+    <div class="left-body" style="margin-right: 100px">
+      <div class="booking-card-overall d-flex">
+        <div class="booking-card-image-div">
+          <% if @surfboard.photo.attached? %>
+            <%= cl_image_tag @surfboard.photo.key, class: "booking-card-image" %>
+          <% else  %>
+            <%= image_tag "surfboard_placeholder.png", class: "booking-card-image" %>
+          <% end %>
+        </div>
+        <div class="booking-card-body">
+            <h4>Surfboard details</h4>
+            <hr>
+            <div class="surfboard-info">
+              <p><%= image_tag "location_icon.png", alt: "Icon", width: 15 %>
+              Location: <b><%= @surfboard.location %></b></p>
+              <p><%= image_tag "surfboard_icon.png", alt: "Icon", width: 15 %>
+              Category: <b><%= @surfboard.category %></b></p>
+              <p><%= image_tag "tail_icon.png", alt: "Icon", width: 15 %>
+              Size: <b><%= @surfboard.size %></b></p>
+              <p><%= image_tag "size_icon.png", alt: "Icon", width: 15 %>
+              Tail: <b><%= @surfboard.tail %></b></p>
+              <p><%= image_tag "owner_icon.png", alt: "Icon", width: 15 %>
+              Owner: <b><%= @surfboard.user.email %></b></p>
+              <p><%= image_tag "price_icon.png", alt: "Icon", width: 15 %>
+              Daily rate: <b>$<%= @surfboard.price %></b></p>
+              <p><%= image_tag "star_icon.png", alt: "Icon", width: 15 %>
+              Review: <b>Every board is perfect</b></p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="right-body">
-    <h1 class="pb-4">Book now!</h1>
-    <div>
-        <%= simple_form_for [@surfboard, @booking]   do |f| %>
-          <%= f.input :start_date,
-            as: :string,
-            input_html: { data: { controller: "datepicker", price_update_target: "startDate", action: "input->price-update#update" } } %>
-          <%= f.input :end_date,
-            as: :string,
-            input_html: { data: { controller: "datepicker", price_update_target: "endDate", action: "input->price-update#update" } } %>
-          <p data-price-update-target="totalPrice">Select dates</p>
-          <%= f.submit class: "btn btn-secondary" %>
-        <% end %>
+    <div class="right-body">
+      <h1 class="pb-4">Book now!</h1>
+      <div>
+          <%= simple_form_for [@surfboard, @booking]   do |f| %>
+            <%= f.input :start_date,
+              as: :string,
+              input_html: { data: { controller: "datepicker", price_update_target: "startDate", action: "input->price-update#update" } } %>
+            <%= f.input :end_date,
+              as: :string,
+              input_html: { data: { controller: "datepicker", price_update_target: "endDate", action: "input->price-update#update" } } %>
+            <p data-price-update-target="totalPrice">Select dates</p>
+            <%= f.submit class: "btn btn-secondary" %>
+          <% end %>
+      </div>
     </div>
   </div>
+  <br>
+
+  <% if @surfboard.reviews[0] != nil %>
+    <hr>
+    <div class="bottom-body d-flex justify-content-center">
+      <div class="review-box">
+        <div id="carouselExample" class="carousel slide">
+          <div class="carousel-inner">
+            <% @surfboard.reviews.each_with_index do |review, index| %>
+                <div class="carousel-item <%= "active" if index == 0 %> px-4">
+                    <div class="d-flex align-items-center justify-content-center">
+                      <h2 class="rating-box"><%= review.rating %>/10</h2>
+                      <div class="comment-box">
+                        <p>"<%= review.comment %>"</p>
+                        <p><i>- <%= review.booking.user.email %></i></p>
+                      </div>
+                    </div>
+                </div>
+            <% end %>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <%= image_tag "left_arrow_icon.png", alt: "Icon", width: 15 %>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <%= image_tag "right_arrow_icon.png", alt: "Icon", width: 15 %>
+          </button>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>

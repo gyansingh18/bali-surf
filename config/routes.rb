@@ -13,5 +13,10 @@ Rails.application.routes.draw do
   resources :surfboards, only: [:new, :create, :index] do
     resources :bookings, only: [:new, :create]
   end
-  resources :bookings, only: [:edit, :update, :index]
+  resources :bookings, only: [:edit, :update, :index] do
+    member do
+      patch :accept
+      patch :deny
+    end
+  end
 end
