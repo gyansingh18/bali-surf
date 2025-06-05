@@ -4,7 +4,11 @@
     <div class="left-body" style="margin-right: 100px">
       <div class="booking-card-overall d-flex">
         <div class="booking-card-image-div">
-          <img src=<%= @surfboard.image_url %> alt="surfboard" class="booking-card-image">
+          <% if @surfboard.photo.attached? %>
+            <%= cl_image_tag @surfboard.photo.key, class: "booking-card-image" %>
+          <% else  %>
+            <%= image_tag "surfboard_placeholder.png", class: "booking-card-image" %>
+          <% end %>
         </div>
         <div class="booking-card-body">
             <h4>Surfboard details</h4>
