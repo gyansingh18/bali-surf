@@ -31,7 +31,7 @@ users = user_names.map do |name|
 
   # --- Handle specific overrides ---
   email_to_use = ""
-  password_to_use = "password@123"
+  password_to_use = "password123"
 
   case name
   when "Ashley Azure"
