@@ -1,5 +1,6 @@
 .navbar-lewagon {
   justify-content: space-between;
+  padding: 0;
   background: $primary-colour;
 
   .nav-link{
@@ -12,5 +13,6 @@
 }
 
 .navbar-lewagon .navbar-brand img {
-  width: 40px;
+  height: 100px;
+  padding: 0;
 }
