@@ -9,6 +9,6 @@ class User < ApplicationRecord
   has_many :bookings, dependent: :destroy
 
   # Validations
-  validates :first_name, presence: true, length: { minimum: 2, maximum: 50 }
-  validates :last_name, presence: true, length: { minimum: 2, maximum: 50 }
+  validates :first_name, presence: true, length: { minimum: 1, maximum: 50 }
+  validates :last_name, presence: true, length: { minimum: 1, maximum: 50 }
 end
