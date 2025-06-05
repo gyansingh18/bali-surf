@@ -1,7 +1,7 @@
 <div class="container">
   <h2 class="text-center mt-3">Find your <span class="highlight-word">perfect</span> board!</h2>
   <br>
-  <div class="row rounded-pill py-3 bg-opacity-10 bg-light">
+  <div class="searchbar row rounded-pill py-3 bg-opacity-10 bg-light">
     <%= form_with url: surfboards_path, method: :get, class: "d-flex gap-3 justify-content-center" do %>
       <div class="col-3">
         <div class="border-end-2">
@@ -31,9 +31,8 @@
     <h3><span class="highlight-word align-text-center"><%= @noresults ? "Sorry, no boards match your research" : "" %></span></h3>
   </div>
 
-
-  <br>
 </div>
+  <br>
 
   <div class="d-flex">
     <div class="cardslist">
