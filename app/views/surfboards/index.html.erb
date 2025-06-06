@@ -1,7 +1,7 @@
 <div class="container">
-  <h2 class="text-center">Find your <span class="highlight-word">perfect</span> board!</h2>
+  <h2 class="text-center mt-3">Find your <span class="highlight-word">perfect</span> board!</h2>
   <br>
-  <div class="row rounded-pill py-3 bg-opacity-10 bg-light">
+  <div class="searchbar row rounded-pill py-3 bg-opacity-10 bg-light">
     <%= form_with url: surfboards_path, method: :get, class: "d-flex gap-3 justify-content-center" do %>
       <div class="col-3">
         <div class="border-end-2">
@@ -27,18 +27,17 @@
         </div>
       <% end %>
     </div>
+    <br>
+    <h3><span class="highlight-word align-text-center"><%= @noresults ? "Sorry, no boards match your research" : "" %></span></h3>
   </div>
 
-  <br>
-
-
-  <br>
 </div>
+  <br>
 
   <div class="d-flex">
     <div class="cardslist">
       <% @surfboards.each do |surfboard| %>
-        <div class="card" style="width: 18rem;">
+        <div class="card border-0 shadow-sm" style="width: 18rem;">
           <% if surfboard.photo.attached? %>
             <%= cl_image_tag surfboard.photo.key, class: "board-img" %>
           <% else  %>
@@ -47,7 +46,7 @@
           <div class="card-body">
           <div class="d-inline justify-content-between">
             <p class="card-title mb-0"><strong><%= surfboard.category %></strong> in <%= surfboard.location %></p>
-            <p><strong><%= surfboard.price %></strong> /day</p>
+            <p><strong><%= surfboard.price %></strong>k IDR/day</p>
           </div>
               <%= link_to "Check it now!", new_surfboard_booking_path(surfboard), class: "btn btn-secondary"%>
           </div>

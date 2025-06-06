@@ -15,14 +15,16 @@ class SurfboardsController < ApplicationController
         @surfboards = @surfboards.where("tail ILIKE ?", "%#{params[:surfboard][:tail]}%")
       end
       if @surfboards.empty?
-        flash.now[:alert] = "Sorry, no boards match your research"
+        # flash.now[:alert] = "Sorry, no boards match your research"
         @surfboards = Surfboard.all
+        @noresults = true
       end
     end
     @markers = @surfboards.geocoded.map do |surfboard|
       {
         lat: surfboard.latitude,
-        lng: surfboard.longitude
+        lng: surfboard.longitude,
+        info_window_html: render_to_string(partial: "info_window", locals: { surfboard: surfboard })
       }
     end
   end
