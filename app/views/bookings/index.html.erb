@@ -74,9 +74,9 @@
       <% @bookings_as_renter.each do |booking| %>
         <div class="cardlist my-3">
           <% if booking.surfboard.photo.attached? %>
-            <%= cl_image_tag booking.surfboard.photo.key, class: "board-img" %>
+            <%= cl_image_tag booking.surfboard.photo.key, class: "book-img" %>
           <% else  %>
-            <%= image_tag "surfboard_placeholder.png", class: "board-img" %>
+            <%= image_tag "surfboard_placeholder.png", class: "book-img" %>
           <% end %>
           <div class="card-product-infos">
             <%# add user name tommorow %>
