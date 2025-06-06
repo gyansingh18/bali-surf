@@ -24,7 +24,8 @@ class SurfboardsController < ApplicationController
       {
         lat: surfboard.latitude,
         lng: surfboard.longitude,
-        info_window_html: render_to_string(partial: "info_window", locals: { surfboard: surfboard })
+        info_window_html: render_to_string(partial: "info_window", locals: { surfboard: surfboard }),
+        marker_html: render_to_string(partial: "marker")
       }
     end
   end

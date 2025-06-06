@@ -1,0 +1,14 @@
+<div class="card" style="width: 18rem;">
+  <% if surfboard.photo.attached? %>
+    <%= cl_image_tag surfboard.photo.key, class: "board-img" %>
+  <% else  %>
+    <%= image_tag "surfboard_placeholder.png", class: "board-img" %>
+  <% end %>
+  <div class="card-body">
+  <div class="d-inline justify-content-between">
+    <p class="card-title mb-0"><strong><%= surfboard.category %></strong> in <%= surfboard.location %></p>
+    <p><strong><%= surfboard.price %></strong>k IDR/day</p>
+  </div>
+      <%# <%= link_to "Check it now!", new_surfboard_booking_path(surfboard), class: "btn btn-secondary"%> 
+  </div>
+</div>
