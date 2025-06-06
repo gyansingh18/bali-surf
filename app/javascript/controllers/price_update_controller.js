@@ -20,7 +20,7 @@ export default class extends Controller {
         alert("Please select valid dates");
     } else if (endDate >= startDate) {
         const totalPrice = (((endDate - startDate)/1000/60/60/24) + 1) * this.rateValue;
-        this.totalPriceTarget.innerText = `Price: $${totalPrice}`;
+        this.totalPriceTarget.innerText = `Price: ${totalPrice}k IDR`;
     } else {
         this.totalPriceTarget.innerText = "Select dates";
     }
