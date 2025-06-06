@@ -9,7 +9,7 @@
     <div class="col-md-6 p-4">
       <%= simple_form_for @surfboard do |f| %>
         <%= f.input :category, collection: Surfboard::CATEGORIES, prompt: "Select a category", input_html: { class: 'rounded-input' } %>
-        <%= f.input :size, input_html: { class: 'rounded-input' } %>
+        <%= f.input :size, collection: Surfboard::SURFBOARD_SIZES, input_html: { class: 'rounded-input' } %>
         <%= f.input :tail, collection: Surfboard::TAIL_TYPES, prompt: "Select a tail type", input_html: { class: 'rounded-input' } %>
         <%= f.input :location, input_html: { class: 'rounded-input' } %>
         <%= f.input :price, input_html: { class: 'rounded-input' } %>
