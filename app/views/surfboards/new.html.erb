@@ -1,28 +1,28 @@
+<%# app/views/surfboards/new.html.erb %>
+
 <div class="container my-5">
   <div class="row">
     <div class="col-12 text-center mb-4">
-      <h1 class="new-surfboard-title">Add a surfboard to be rented!</h1>
+      <h2 class="new-surfboard-title">Add a surfboard!</h2>
     </div>
   </div>
 
-  <div class="row new-surfboard-form-container">
-    <div class="col-md-6 p-4">
-      <%= simple_form_for @surfboard do |f| %>
-        <%= f.input :category, collection: Surfboard::CATEGORIES, prompt: "Select a category", input_html: { class: 'rounded-input' } %>
-        <%= f.input :size, collection: Surfboard::SURFBOARD_SIZES, input_html: { class: 'rounded-input' } %>
-        <%= f.input :tail, collection: Surfboard::TAIL_TYPES, prompt: "Select a tail type", input_html: { class: 'rounded-input' } %>
-        <%= f.input :location, input_html: { class: 'rounded-input' } %>
-        <%= f.input :price, input_html: { class: 'rounded-input' } %>
-        <%= f.input :photo, as: :file %>
-        <%= f.submit "Add Surfboard", class: "btn btn-primary mt-3 w-100" %>
-      <% end %>
-    </div>
+<div class="row justify-content-center">
+  <div class="col-lg-10 col-md-12">
+    <div class="card shadow-lg p-4 mb-5 bg-white rounded">
+      <div class="row">
+        <div class="col-md-6 p-4 border-right">
+          <%= simple_form_for @surfboard do |f| %>
+            <%= render "form", f: f %>
+          <% end %>
+        </div>
 
-    <div class="col-md-6 p-4 d-flex flex-column align-items-center justify-content-center d-none">
-      <div class="image-placeholder d-flex align-items-center justify-content-center mb-3">
-        <i class="fa-solid fa-camera fa-3x text-muted"></i>
+        <div class="col-md-6 p-4 d-flex flex-column align-items-center justify-content-center">
+          <h5>Surfboard Preview</h5>
+          <br>
+          <%= image_tag "surfboard_new.png", class: "img-fluid mb-3" %>
+        </div>
       </div>
-      <button class="btn btn-secondary mt-3" type="file">Add Image</button>
     </div>
   </div>
 </div>
