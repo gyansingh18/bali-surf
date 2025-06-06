@@ -28,10 +28,15 @@
               Daily rate: <b><%= @surfboard.price.round(0) %>k IDR/day</b></p>
               <p><%= image_tag "star_icon.png", alt: "Icon", width: 15 %>
               <% rating_sum = 0 %>
-              Rating: <b><% @surfboard.reviews.each_with_index do |review, index| %>
-                <% rating_sum += review.rating %>
-              <% end %>
-              <%= rating_sum.fdiv(@surfboard.reviews.count()).round(0) %>/10</b></p>
+              Rating: <b>
+                <% if @surfboard.reviews.count() > 0 %>
+                  <% @surfboard.reviews.each_with_index do |review, index| %>
+                    <% rating_sum += review.rating %>
+                  <% end %>
+                  <%= rating_sum.fdiv(@surfboard.reviews.count()).round(0) %>/10
+                <% else %>
+                  No ratings yet
+                <% end %></b></p>
           </div>
         </div>
       </div>
@@ -81,6 +86,12 @@
           </button>
         </div>
       </div>
+    </div>
+  <% else %>
+    <hr>
+    <br>
+    <div class="d-flex justify-content-center">
+      <i>No reviews yet</i>
     </div>
   <% end %>
 </div>
