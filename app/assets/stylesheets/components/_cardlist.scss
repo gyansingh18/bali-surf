@@ -1,7 +1,6 @@
 .cardlist {
   overflow: hidden;
   height: 120px;
-  background: white;
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
   display: flex;
   align-items: center;
@@ -44,4 +43,15 @@
   gap: 15px;
   padding-inline: 20px;
   font-size: 12px;
+}
+
+.card {
+  width: 18rem;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2) !important;
+  border: 0;
+  background: none !important;
+}
+
+.no-decoration {
+    text-decoration: none;
 }
