@@ -38,6 +38,7 @@ class BookingsController < ApplicationController
     redirect_to bookings_path, alert: "Booking denied."
   end
 
+
   private
   def booking_params
     params.require(:booking).permit(:start_date, :end_date, :total_price)

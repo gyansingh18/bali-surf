@@ -48,10 +48,14 @@
           <%= simple_form_for [@surfboard, @booking]   do |f| %>
             <%= f.input :start_date,
               as: :string,
-              input_html: { data: { controller: "datepicker", price_update_target: "startDate", action: "input->price-update#update" } } %>
+              input_html: {
+                value: Date.today.strftime('%Y-%m-%d'),
+                data: { controller: "datepicker", price_update_target: "startDate", action: "input->price-update#update" } } %>
             <%= f.input :end_date,
               as: :string,
-              input_html: { data: { controller: "datepicker", price_update_target: "endDate", action: "input->price-update#update" } } %>
+              input_html: {
+                value: Date.tomorrow.strftime('%Y-%m-%d'),
+                data: { controller: "datepicker", price_update_target: "endDate", action: "input->price-update#update" } } %>
             <p data-price-update-target="totalPrice">Select dates</p>
             <%= f.submit class: "btn btn-secondary" %>
           <% end %>
