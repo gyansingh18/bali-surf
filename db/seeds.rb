@@ -21,7 +21,7 @@ user_names = [
   "Christina Coast",   # Group member + alliterative surfer/beach name
   "Dani Dune",         # Group member + alliterative surfer/beach name
   "Bogan Barrel",      # Specific request + alliterative surfer/beach name
-  "Canuck Cove",       # Specific request + allting surfer/beach name
+  "Canuck Cove",       # Specific request + alliterative surfer/beach name
   "Ketut Kaimana"      # Specific request + alliterative surfer/beach name
 ]
 
@@ -57,7 +57,6 @@ end
 
 puts "Created #{users.count} users."
 
-# ... (rest of your seed file remains the same) ...
 
 # --- Designate Surfboard Owners ---
 # Let's pick the first 3 users to be surfboard owners
@@ -108,13 +107,45 @@ puts "Creating bookings..."
 # Users who don't own surfboards will be the ones making bookings
 booking_users = users - surfboard_owners
 
-50.times do
+# We will create bookings that are both in the past and in the future.
+# Bookings in the past will be eligible for reviews.
+
+# Determine a target number of past bookings for each surfboard to ensure enough for reviews
+# Assuming each owner has 10 surfboards, and we need 5 reviews per surfboard,
+# we need at least 5 past bookings per surfboard.
+# Total surfboards = 3 owners * 10 surfboards/owner = 30 surfboards
+# Target total past bookings = 30 surfboards * 5 bookings/surfboard = 150 bookings
+# Since we only create 50 bookings in total, we'll try to prioritize past bookings.
+
+bookings_to_create_count = 100 # Increased total bookings to ensure enough for reviews
+past_booking_target = 5 # Number of past bookings we aim for per surfboard
+
+bookings_created_count = 0
+while bookings_created_count < bookings_to_create_count
   user = booking_users.sample
   surfboard = surfboards.sample
 
-  # Ensure booking dates are in the future for "pending" status, or in the past for reviews
-  start_date = Faker::Date.between(from: Date.today, to: 3.months.from_now)
-  end_date = start_date + Faker::Number.between(from: 2, to: 10).days # Booking for 2 to 10 days
+  start_date = nil
+  end_date = nil
+  status = nil
+
+  # Check if this surfboard already has enough past bookings for reviews
+  # and if we still need to create future bookings
+  existing_past_bookings_for_surfboard = Booking.where(surfboard: surfboard, status: "accepted")
+                                                .where("end_date < ?", Date.today)
+                                                .count
+
+  if existing_past_bookings_for_surfboard < past_booking_target && bookings_created_count < (surfboards.count * past_booking_target)
+    # Create a past booking if this surfboard needs more for reviews
+    start_date = Faker::Date.between(from: 3.months.ago, to: 1.month.ago)
+    end_date = start_date + Faker::Number.between(from: 2, to: 10).days
+    status = "accepted" # Using an existing valid status for past bookings
+  else
+    # Create a future booking otherwise
+    start_date = Faker::Date.between(from: Date.today, to: 3.months.from_now)
+    end_date = start_date + Faker::Number.between(from: 2, to: 10).days
+    status = "pending" # Using an existing valid status for future bookings
+  end
 
   total_price = (end_date - start_date).to_i * surfboard.price
 
@@ -124,15 +155,14 @@ booking_users = users - surfboard_owners
     start_date: start_date,
     end_date: end_date,
     total_price: total_price,
-    status: "pending" # All new bookings start as pending
+    status: status
   )
+  bookings_created_count += 1
 end
-puts "Created 50 bookings."
+puts "Created #{Booking.count} bookings."
 
 # --- Create Reviews for past bookings ---
 puts "Creating reviews for relevant bookings..."
-# Find bookings that have ended to be eligible for reviews
-bookings_for_review = Booking.where("end_date < ?", Date.today).sample(Faker::Number.between(from: 10, to: 20)) # Create 10-20 reviews
 
 review_comments = [
   "Great board, perfect for the waves!",
@@ -147,109 +177,30 @@ review_comments = [
   "Owner was very helpful."
 ]
 
-bookings_for_review.each do |booking|
-  Review.create!(
-    booking: booking,
-    rating: Review::RATINGS.sample,
-    comment: review_comments.sample
-  )
-  # Optionally, you could mark the booking status as 'completed' here if you have such a status
-end
+# Iterate through each surfboard to ensure it gets reviews
+total_reviews_created = 0
+surfboards.each do |surfboard|
+  # Find all 'accepted' bookings for this surfboard that have ended
+  eligible_bookings_for_surfboard = Booking.where(surfboard: surfboard, status: "accepted")
+                                           .where("end_date < ?", Date.today)
+                                           .order(end_date: :asc) # Order by ascending date to get older bookings first
 
-puts "Created #{Review.count} reviews."
-puts "Seed complete!"
+  # Select up to 5 of these bookings to create reviews for
+  # Using `first(5)` after ordering by `asc` to get the earliest 5 past bookings
+  bookings_to_review_for_this_surfboard = eligible_bookings_for_surfboard.first(5)
 
-# --- Create Surfboards ---
-puts "Creating surfboards..."
-surfboards = []
-bali_locations = [
-  "Canggu, Bali, Indonesia",
-  "Uluwatu, Bali, Indonesia",
-  "Kuta, Bali, Indonesia",
-  "Seminyak, Bali, Indonesia",
-  "Padang Padang, Bali, Indonesia",
-  "Bingin, Bali, Indonesia",
-  "Sanur, Bali, Indonesia",
-  "Keramas, Bali, Indonesia",
-  "Medewi, Bali, Indonesia",
-  "Echo Beach, Bali, Indonesia",
-  "Balangan, Bali, Indonesia",
-  "Dreamland, Bali, Indonesia",
-  "Jimbaran, Bali, Indonesia",
-  "Legian, Bali, Indonesia",
-  "Suluban Beach, Bali, Indonesia",
-  "Green Bowl Beach, Bali, Indonesia"
-]
-
-surfboard_owners.each do |owner|
-  10.times do
-    surfboard = Surfboard.new(
-      user: owner,
-      category: Surfboard::CATEGORIES.sample,
-      size: "#{(Faker::Number.decimal(l_digits: 1, r_digits: 1) + 5).round(1)}'",
-      tail: Surfboard::TAIL_TYPES.sample,
-      location: bali_locations.sample,
-      price: Faker::Commerce.price(range: 10..50).to_i
-    )
-    surfboard.save!
-    surfboards << surfboard
+  bookings_to_review_for_this_surfboard.each do |booking|
+    # Only create a review if one doesn't already exist for this booking
+    unless booking.review.present?
+      Review.create!(
+        booking: booking,
+        rating: Faker::Number.between(from: 8, to: 10), # Set rating between 8 and 10
+        comment: review_comments.sample
+      )
+      total_reviews_created += 1
+    end
   end
 end
 
-puts "Created #{surfboards.count} surfboards."
-
-# --- Create Bookings ---
-puts "Creating bookings..."
-# Users who don't own surfboards will be the ones making bookings
-booking_users = users - surfboard_owners
-
-50.times do
-  user = booking_users.sample
-  surfboard = surfboards.sample
-
-  # Ensure booking dates are in the future for "pending" status, or in the past for reviews
-  start_date = Faker::Date.between(from: Date.today, to: 3.months.from_now)
-  end_date = start_date + Faker::Number.between(from: 2, to: 10).days # Booking for 2 to 10 days
-
-  total_price = (end_date - start_date).to_i * surfboard.price
-
-  Booking.create!(
-    user: user,
-    surfboard: surfboard,
-    start_date: start_date,
-    end_date: end_date,
-    total_price: total_price,
-    status: "pending" # All new bookings start as pending
-  )
-end
-puts "Created 50 bookings."
-
-# --- Create Reviews for past bookings ---
-puts "Creating reviews for relevant bookings..."
-# Find bookings that have ended to be eligible for reviews
-bookings_for_review = Booking.where("end_date < ?", Date.today).sample(Faker::Number.between(from: 10, to: 20)) # Create 10-20 reviews
-
-review_comments = [
-  "Great board, perfect for the waves!",
-  "Had an amazing time, surfboard was in excellent condition.",
-  "Smooth ride, really enjoyed it.",
-  "Excellent rental, highly recommend.",
-  "The board was exactly what I needed.",
-  "Fantastic experience, board felt great.",
-  "Good value for money.",
-  "Met expectations, solid board.",
-  "Perfect for learning.",
-  "Owner was very helpful."
-]
-
-bookings_for_review.each do |booking|
-  Review.create!(
-    booking: booking,
-    rating: Review::RATINGS.sample,
-    comment: review_comments.sample
-  )
-  # Optionally, you could mark the booking status as 'completed' here if you have such a status
-end
-
-puts "Created #{Review.count} reviews."
+puts "Created #{total_reviews_created} reviews."
 puts "Seed complete!"
