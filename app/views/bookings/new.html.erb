@@ -23,18 +23,22 @@
               <p><%= image_tag "size_icon.png", alt: "Icon", width: 15 %>
               Tail: <b><%= @surfboard.tail %></b></p>
               <p><%= image_tag "owner_icon.png", alt: "Icon", width: 15 %>
-              Owner: <b><%= @surfboard.user.email %></b></p>
+              Owner: <b><%= @surfboard.user.first_name %></b></p>
               <p><%= image_tag "price_icon.png", alt: "Icon", width: 15 %>
-              Daily rate: <b>$<%= @surfboard.price %></b></p>
+              Daily rate: <b><%= @surfboard.price.round(0) %>k IDR/day</b></p>
               <p><%= image_tag "star_icon.png", alt: "Icon", width: 15 %>
-              Review: <b>Every board is perfect</b></p>
+              <% rating_sum = 0 %>
+              Rating: <b><% @surfboard.reviews.each_with_index do |review, index| %>
+                <% rating_sum += review.rating %>
+              <% end %>
+              <%= rating_sum.fdiv(@surfboard.reviews.count()).round(0) %>/10</b></p>
           </div>
         </div>
       </div>
     </div>
 
     <div class="right-body">
-      <h1 class="pb-4">Book now!</h1>
+      <h1 class="pb-4">Book <span class="highlight-word"> now</span>!</h1>
       <div>
           <%= simple_form_for [@surfboard, @booking]   do |f| %>
             <%= f.input :start_date,
@@ -63,7 +67,7 @@
                       <h2 class="rating-box"><%= review.rating %>/10</h2>
                       <div class="comment-box">
                         <p>"<%= review.comment %>"</p>
-                        <p><i>- <%= review.booking.user.email %></i></p>
+                        <p><i>- <%= review.booking.user.first_name %></i></p>
                       </div>
                     </div>
                 </div>
