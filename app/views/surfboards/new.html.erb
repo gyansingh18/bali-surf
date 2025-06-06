@@ -7,22 +7,31 @@
     </div>
   </div>
 
-<div class="row justify-content-center">
-  <div class="col-lg-10 col-md-12">
-    <div class="card shadow-lg p-4 mb-5 bg-white rounded">
-      <div class="row">
-        <div class="col-md-6 p-4 border-right">
-          <%= simple_form_for @surfboard do |f| %>
-            <%= render "form", f: f %>
-          <% end %>
-        </div>
-
-        <div class="col-md-6 p-4 d-flex flex-column align-items-center justify-content-center">
-          <h5>Surfboard Preview</h5>
-          <br>
-          <%= image_tag "surfboard_new.png", class: "img-fluid mb-3" %>
-        </div>
-      </div>
+<%= simple_form_for @surfboard, html: {data: {controller: "photo-preview"}} do |f| %>
+  <div class="form-wrapper">
+    <div>
+      <%= f.input :category, collection: Surfboard::CATEGORIES, prompt: "Select a category", input_html: { class: 'rounded-input' } %>
+      <%= f.input :size, input_html: { class: 'rounded-input' } %>
+      <%= f.input :tail, collection: Surfboard::TAIL_TYPES, prompt: "Select a tail type", input_html: { class: 'rounded-input' } %>
+      <%= f.input :location,
+        prompt: "Select a price per day",
+        input_html: {
+          class: 'rounded-input d-none',
+          data: { address_autocomplete_target: "address" } # Stimulus target
+        },
+        wrapper_html: {
+          data: {
+            controller: "address-autocomplete", # Connect to Stimulus controller
+            address_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]
+          }
+        }
+      %>
+      <%= f.input :price, label: 'Price (Rp 1000s)', prompt: "Select a category", input_html: { class: 'rounded-input' }, prefix: 'Rp', suffix: '1000s' %>
+    </div>
+    <div class="form-image">
+      <%= image_tag "", width: 300, class: "hidden", data: { photo_preview_target: "preview" } %>
+      <%= f.input :photo, as: :file, input_html: { class: 'd-none', data: { photo_preview_target: "input", action:"change->photo-preview#displayPreview" }}, label_html: { class: 'upload-photo'}, label: '📷 Upload a photo'%>
     </div>
   </div>
-</div>
+  <%= f.submit "Add Surfboard", class: "btn btn-primary mt-3 w-100" %>
+<% end %>
