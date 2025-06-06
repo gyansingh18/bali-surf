@@ -85,8 +85,14 @@ bali_locations = [
   "Green Bowl Beach, Bali, Indonesia" # Very specific beach
 ]
 
+board_image_links = [
+  "https://images.unsplash.com/photo-1531722569936-825d3dd91b15?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+]
+
 surfboard_owners.each do |owner|
   10.times do
+    link = board_image_links.sample
+    file = URI.parse(link).open
     surfboard = Surfboard.new(
       user: owner,
       category: Surfboard::CATEGORIES.sample,
@@ -95,6 +101,7 @@ surfboard_owners.each do |owner|
       location: bali_locations.sample,
       price: Faker::Commerce.price(range: 10..50).to_i # Price per day
     )
+    surfboard.photo.attach(io: file, filename: "photo.png", content_type: "image/png")
     surfboard.save!
     surfboards << surfboard
   end
