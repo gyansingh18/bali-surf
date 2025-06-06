@@ -1,28 +1,37 @@
+<%# app/views/surfboards/new.html.erb %>
+
 <div class="container my-5">
   <div class="row">
     <div class="col-12 text-center mb-4">
-      <h1 class="new-surfboard-title">Add a surfboard to be rented!</h1>
+      <h2 class="new-surfboard-title">Add a surfboard!</h2>
     </div>
   </div>
 
-  <div class="row new-surfboard-form-container">
-    <div class="col-md-6 p-4">
-      <%= simple_form_for @surfboard do |f| %>
-        <%= f.input :category, collection: Surfboard::CATEGORIES, prompt: "Select a category", input_html: { class: 'rounded-input' } %>
-        <%= f.input :size, input_html: { class: 'rounded-input' } %>
-        <%= f.input :tail, collection: Surfboard::TAIL_TYPES, prompt: "Select a tail type", input_html: { class: 'rounded-input' } %>
-        <%= f.input :location, input_html: { class: 'rounded-input' } %>
-        <%= f.input :price, input_html: { class: 'rounded-input' } %>
-        <%= f.input :photo, as: :file %>
-        <%= f.submit "Add Surfboard", class: "btn btn-primary mt-3 w-100" %>
-      <% end %>
+<%= simple_form_for @surfboard, html: {data: {controller: "photo-preview"}} do |f| %>
+  <div class="form-wrapper">
+    <div>
+      <%= f.input :category, collection: Surfboard::CATEGORIES, prompt: "Select a category", input_html: { class: 'rounded-input' } %>
+      <%= f.input :size, input_html: { class: 'rounded-input' } %>
+      <%= f.input :tail, collection: Surfboard::TAIL_TYPES, prompt: "Select a tail type", input_html: { class: 'rounded-input' } %>
+      <%= f.input :location,
+        prompt: "Select a price per day",
+        input_html: {
+          class: 'rounded-input d-none',
+          data: { address_autocomplete_target: "address" } # Stimulus target
+        },
+        wrapper_html: {
+          data: {
+            controller: "address-autocomplete", # Connect to Stimulus controller
+            address_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]
+          }
+        }
+      %>
+      <%= f.input :price, label: 'Price (Rp 1000s)', prompt: "Select a category", input_html: { class: 'rounded-input' }, prefix: 'Rp', suffix: '1000s' %>
     </div>
-
-    <div class="col-md-6 p-4 d-flex flex-column align-items-center justify-content-center d-none">
-      <div class="image-placeholder d-flex align-items-center justify-content-center mb-3">
-        <i class="fa-solid fa-camera fa-3x text-muted"></i>
-      </div>
-      <button class="btn btn-secondary mt-3" type="file">Add Image</button>
+    <div class="form-image">
+      <%= image_tag "", width: 300, class: "hidden", data: { photo_preview_target: "preview" } %>
+      <%= f.input :photo, as: :file, input_html: { class: 'd-none', data: { photo_preview_target: "input", action:"change->photo-preview#displayPreview" }}, label_html: { class: 'upload-photo'}, label: '📷 Upload a photo'%>
     </div>
   </div>
-</div>
+  <%= f.submit "Add Surfboard", class: "btn btn-primary mt-3 w-100" %>
+<% end %>

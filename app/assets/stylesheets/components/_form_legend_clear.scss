@@ -8,3 +8,14 @@
 legend ~ div.form-check:first-of-type {
   clear: left;
 }
+
+.form-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.form-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
