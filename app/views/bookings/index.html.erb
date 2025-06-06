@@ -1,6 +1,6 @@
 <div class="container">
   <% if @bookings_as_owner.any?%>
-    <h1 class="bookings-title"> Bookings as owner <h1>
+    <h1 class="bookings-title"> Bookings as owner </h1>
     <div>
       <% @bookings_as_owner.each do |booking| %>
         <div class="cardlist my-3">
@@ -12,11 +12,8 @@
           <div class="card-product-infos">
             <%# add user name tommorow %>
             <div class="header-price">
-              <h2><%=  booking.user.email %></h2>
-              <p>
-                Total Price
-                <strong><%= '%.2f' % booking.total_price%>k IDR</strong>
-              </p>
+              <h2> Renter: <%= booking.user.first_name %></h2>
+
               <p class="booking-status">
                 Status: <%= booking.status.capitalize %>
               </p>
@@ -27,7 +24,7 @@
               <div class="categories">
                 <div class="category p-3">
                   <div class="d-inline">
-                    <p><%= image_tag "surfboard_icon", width: "12px" %> board type</p>
+                    <p><%= image_tag "surfboard_icon", width: "12px" %> Board ype</p>
                   </div>
                   <p><strong><%= booking.surfboard.category %></strong></p>
                 </div>
@@ -43,11 +40,26 @@
                   </div>
                   <p><strong><%= booking.end_date.strftime("%b %d, %Y")%></strong></p>
                 </div>
+                <div class="category p-3">
+                  <div class="d-inline">
+                    <p><%= image_tag "location_icon", width: "12px" %>Location</p>
+                    <p><strong><%= booking.surfboard.location%></strong></p>
+                  </div>
+                </div>
+                <div class="category p-3">
+                  <div class="d-inline">
+                    <p><%= image_tag "price_icon", width: "12px" %>Total Price</p>
+                    <p><strong><%= booking.total_price%>k IDR</strong></p>
+                  </div>
+                </div>
+
+
+
               </div>
-            <% if booking.status == "pending" %>
-              <%= button_to "Accept", accept_booking_path(booking), method: :patch, class: "btn accept-deny-button btn-sm btn-success me-2"%>
-              <%= button_to "Deny", deny_booking_path(booking), method: :patch, class: "btn accept-deny-button btn-sm btn-danger"%>
-            <% end %>
+              <% if booking.status == "pending" %>
+                <%= button_to "Accept", accept_booking_path(booking), method: :patch, class: "btn accept-deny-button btn-sm btn-success me-2"%>
+                <%= button_to "Deny", deny_booking_path(booking), method: :patch, class: "btn accept-deny-button btn-sm btn-danger"%>
+              <% end %>
             </div>
           </div>
         </div>
@@ -56,9 +68,9 @@
   <%end %>
 
   <% if @bookings_as_renter.any? %>
-    <h1 class="bookings-title"> Bookings as renter <h1>
+    <h1 class="bookings-title"> Bookings as renter </h1>
 
-    <div>
+    <div style="display: block">
       <% @bookings_as_renter.each do |booking| %>
         <div class="cardlist my-3">
           <% if booking.surfboard.photo.attached? %>
@@ -69,22 +81,17 @@
           <div class="card-product-infos">
             <%# add user name tommorow %>
             <div class="header-price">
-              <h2> Owner: <%=  booking.surfboard.user.email %></h2>
-              <p>
-                Total Price
-                <strong><%= '%.2f' % booking.total_price%>k IDR</strong>
-              </p>
+              <h2> Owner: <%=  booking.surfboard.user.first_name %></h2>
               <p class="booking-status">
                 Status: <%= booking.status.capitalize %>
               </p>
-
             </div>
 
             <div class="d-flex justify-content-between align-items-center">
               <div class="categories">
                 <div class="category p-3">
                   <div class="d-inline">
-                    <p><%= image_tag "surfboard_icon", width: "12px" %> board type</p>
+                    <p><%= image_tag "surfboard_icon", width: "12px" %> Board Type</p>
                   </div>
                   <p><strong><%= booking.surfboard.category %></strong></p>
                 </div>
@@ -100,12 +107,23 @@
                   </div>
                   <p><strong><%= booking.end_date.strftime("%b %d, %Y")%></strong></p>
                 </div>
+                <div class="category p-3">
+                  <div class="d-inline">
+                    <p><%= image_tag "location_icon", width: "12px" %>Location</p>
+                    <p><strong><%= booking.surfboard.location%></strong></p>
+                  </div>
+                </div>
+                  <div class="category p-3">
+                  <div class="d-inline">
+                    <p><%= image_tag "price_icon", width: "12px" %>Total Price</p>
+                    <p><strong><%= booking.total_price%>k IDR</strong></p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       <% end %>
     </div>
-
   <%end%>
 </div>
