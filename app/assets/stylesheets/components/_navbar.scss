@@ -6,6 +6,14 @@
   .nav-link{
     color: $background-colour !important;
   }
+
+  .nav-link:hover{
+    color: $secondary-colour !important;
+  }
+
+  h1 {
+    font-size: 60px;
+  }
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -16,3 +24,12 @@
   height: 100px;
   padding: 0;
 }
+
+.nav-item {
+  font-family: $headers-font;
+  font-size: 20px;
+  border: 5px;
+  border-color: $background-colour;
+  border-radius: 5px;
+}
+
