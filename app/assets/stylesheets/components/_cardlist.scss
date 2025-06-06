@@ -6,9 +6,9 @@
   align-items: center;
 }
 
-.cardlist .board-img {
-  height: 100%;
-  width: 120px;
+.board-img {
+  max-height: 200px;
+  width: 100%;
   object-fit: cover;
 }
 
