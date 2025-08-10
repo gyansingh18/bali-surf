@@ -1,4 +1,6 @@
 Rails app generated with [lewagon/rails-templates](https://github.com/lewagon/rails-templates), created by the [Le Wagon coding bootcamp](https://www.lewagon.com) team.
+
+
 Bali Surf
 Bali Surf is a Ruby on Rails web application designed for surfers and travelers to discover the best surf spots around Bali. It combines real-time surf conditions, location-based search, and a curated database of spots to make trip planning easier.
 Note: This is a practice/learning project rebuilt as part of my Le Wagon journey, hosted inside the Clint Ryan repository.
